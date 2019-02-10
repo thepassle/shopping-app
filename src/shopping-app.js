@@ -57,14 +57,12 @@ class ShoppingApp extends LitElement {
 
 	/** Toggles when a size is clicked */
 	_handleSizes(e) {
-		console.log('_handleSizes');
 		this.sizes[e.detail] = !this.sizes[e.detail];
 		this.requestUpdate();
 	}
 
 	/** Adds product to the cart, if its already in the cart, update the quantity */
 	_addToCart(e) {
-		console.log('_addToCart');
 		const alreadyInCart = this.shoppingcart.some(product => product.id === e.detail);
 		if(alreadyInCart) {
 			this.shoppingcart = this.shoppingcart.map(product => {

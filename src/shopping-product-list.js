@@ -22,7 +22,6 @@ class ShoppingProductList extends LitElement {
 
 	/** Tells the parent a size is selected */
 	_selectSize(size) {
-		console.log('_selectSize');
 		this.dispatchEvent(new CustomEvent('sizeselected', { detail: size }));   
 	}
 

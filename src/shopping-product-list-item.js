@@ -13,7 +13,6 @@ class ShoppingProductListItem extends LitElement {
 
 	/** Tells the app element a product is selected */
 	_addToCart() {
-		console.log('_addToCart');
 		this.dispatchEvent(new CustomEvent('productselected', { detail: this.id, composed: true, bubbles: true }));
 	}
 
