@@ -64,7 +64,7 @@ class ShoppingApp extends LitElement {
 	/** Adds product to the cart, if its already in the cart, update the quantity */
 	_addToCart(e) {
 		const alreadyInCart = this.shoppingcart.some(product => product.id === e.detail);
-		if(alreadyInCart) {
+		if (alreadyInCart) {
 			this.shoppingcart = this.shoppingcart.map(product => {
 				if(product.id === e.detail) {
 					return {...product, quantity: product.quantity += 1 } // eslint-disable-line

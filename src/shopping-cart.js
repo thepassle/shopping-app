@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { repeat } from 'lit-html/directives/repeat';
 import './shopping-cart-item';
 
 class ShoppingCart extends LitElement {
@@ -30,15 +31,17 @@ class ShoppingCart extends LitElement {
 				<div class="cart-cont">
 					<h2 class="cart-header">Shopping Cart</h2>
 					<div class="cart-products">
-						${this.selectedproducts.map(product => html`
-							<shopping-cart-item
-								.id=${product.id}
-								.name=${product.name}
-								.price=${product.price}
-								.quantity=${product.quantity}
-								.size=${product.size}
-								.img=${product.img}>
-							</shopping-cart-item>
+						${repeat(this.selectedproducts, 
+							(product) => product.id, 
+							(product) => html`
+	      						<shopping-cart-item
+									.id=${product.id}
+									.name=${product.name}
+									.price=${product.price}
+									.quantity=${product.quantity}
+									.size=${product.size}
+									.img=${product.img}>
+								</shopping-cart-item>
 						`)}
 					</div>
 

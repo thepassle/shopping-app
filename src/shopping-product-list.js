@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import './shopping-product-list-item';
+import {repeat} from 'lit-html/directives/repeat';
 
 class ShoppingProductList extends LitElement {
 	static get properties() {
@@ -50,14 +51,16 @@ class ShoppingProductList extends LitElement {
 				</div>
 
 				<div class="products-items-grid">
-					${this.products.map(product => html`
-						<shopping-product-list-item
-							.name=${product.name}
-							.price=${product.price}
-							.size=${product.size}
-							.id=${product.id}
-							.img=${product.img}>
-						</shopping-product-list-item>
+					${repeat(this.products, 
+						(product) => product.id, 
+						(product) => html`
+							<shopping-product-list-item
+								.name=${product.name}
+								.price=${product.price}
+								.size=${product.size}
+								.id=${product.id}
+								.img=${product.img}>
+							</shopping-product-list-item>
 					`)}
 				</div>
 			</div>
