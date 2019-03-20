@@ -2,6 +2,17 @@ import { LitElement, html, css } from 'lit-element';
 import './shopping-product-list';
 import './shopping-cart';
 
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} Product
+ * @property {string} img - Indicates whether the Courage component is present.
+ * @property {string} name - Indicates whether the Power component is present.
+ * @property {number} price - Indicates whether the Wisdom component is present.
+ * @property {string} id - Indicates whether the Wisdom component is present.
+ * @property {string} size - Indicates whether the Wisdom component is present.
+ * @property {number} [quantity] - Indicates whether the Wisdom component is present.
+ */
+
 class ShoppingApp extends LitElement {
 	static get properties() {
 		return {
@@ -10,13 +21,17 @@ class ShoppingApp extends LitElement {
 			sizes: { type: Object },
 			pricefilter: { type: Boolean }
 		};
-	}
+  }
 
 	constructor() {
 		super();
+		/** @type {Product[]} */
 		this.shoppingcart = [];
+		/** @type {boolean} */
 		this.pricefilter = true;
+		/** @type {Object} */
 		this.sizes = {};
+		/** @type {Product[]} */
 		this.products = [
 			{ img: 'img/1.jpg', name: 'tshirt1', price: 1.99, id: "1", size: 'm'},
 			{ img: 'img/2.jpg', name: 'sweater2', price: 2.05, id: "2", size: 'l'},
@@ -35,8 +50,11 @@ class ShoppingApp extends LitElement {
 	}
 
 	/**
-	* Filters ascending or descending based on `this.pricefilter`, 
+	* Filters ascending or descending based on `this.pricefilter`,
 	* true for ascending, false for descending
+	* @param {Product} a
+	* @param {Product} b
+	* @return {number}
 	*/
 	_sortAscOrDesc(a, b) {
 		if(this.pricefilter) {
@@ -55,13 +73,19 @@ class ShoppingApp extends LitElement {
 		return this.sizes[size];
 	}
 
-	/** Toggles when a size is clicked */
+	/**
+   * Toggles when a size is clicked
+	 * @param {Event} e
+	 */
 	_handleSizes(e) {
-		this.sizes[e.detail] = !this.sizes[e.detail];
+    this.sizes[e.detail] = !this.sizes[e.detail];
 		this.requestUpdate();
 	}
 
-	/** Adds product to the cart, if its already in the cart, update the quantity */
+	/**
+   * Adds product to the cart, if its already in the cart, update the quantity
+   * @param {Event} e
+   */
 	_addToCart(e) {
 		const alreadyInCart = this.shoppingcart.some(product => product.id === e.detail);
 		if (alreadyInCart) {
@@ -73,30 +97,33 @@ class ShoppingApp extends LitElement {
 			});
 		} else {
 			this.shoppingcart = this.products.reduce((acc, product) =>  {
-				if(product.id === e.detail) { 
+				if(product.id === e.detail) {
 					return [...acc, { ...product, quantity: 1 }];
 				};
 				return [...acc];
-			}, this.shoppingcart);	
+			}, this.shoppingcart);
 		}
 	}
 
-	/** Removes product from the cart */
+	/**
+   * Removes product from the cart
+   * @param {Event} e
+   */
 	_removeFromCart(e) {
 		this.shoppingcart = this.shoppingcart.filter(product => product.id !== e.detail);
 	}
 
 	render() {
-		return html`
+    return html`
 			<shopping-product-list
-				@orderbychanged=${(e) => { this.pricefilter = e.detail }}
+        @orderbychanged=${(e) => { this.pricefilter = e.detail }}
 				@sizeselected=${this._handleSizes}
 				@productselected=${this._addToCart}
 				.selectedsizes=${this.sizes}
 				.products=${this.products
 					.filter(({size}) => this._filterSizes(size))
 					.sort((a, b) => this._sortAscOrDesc(a, b))
-				}></shopping-product-list>
+        }></shopping-product-list>
 			<shopping-cart
 				.selectedproducts=${this.shoppingcart}
 				@productremoved=${this._removeFromCart}>

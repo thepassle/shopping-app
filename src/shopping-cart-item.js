@@ -10,9 +10,12 @@ class ShoppingCartItem extends LitElement {
 			size: { type: String },
 			img: { type: String}
 		}
-	}
+  }
 
-	/** Tells the app element a product should be removed from the cart */
+	/**
+   * Tells the app element a product should be removed from the cart
+   * @param {string} id
+   */
 	removeProduct(id) {
 		this.dispatchEvent(new CustomEvent('productremoved', { detail: id, composed: true, bubbles: true }));
 	}
@@ -31,7 +34,7 @@ class ShoppingCartItem extends LitElement {
 
 	static get styles() {
 		return css`
-			:host { 
+			:host {
 				display: flex;
 				flex: 1;
 				border: solid 1px black;

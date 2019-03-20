@@ -23,12 +23,12 @@ class ShoppingProductListItem extends LitElement {
 			<div>Price: € ${this.price}</div>
 			<button @click="${this._addToCart}">add to cart</button>
 		`;
-	}
-	
+  }
+
 	static get styles() {
 		return css`
-			:host { 
-				display: block; 
+			:host {
+				display: block;
 				text-align: center;
 			}
 

@@ -2,6 +2,17 @@ import { LitElement, html, css } from 'lit-element';
 import './shopping-product-list-item';
 import {repeat} from 'lit-html/directives/repeat';
 
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} Product
+ * @property {string} img - Indicates whether the Courage component is present.
+ * @property {string} name - Indicates whether the Power component is present.
+ * @property {number} price - Indicates whether the Wisdom component is present.
+ * @property {string} id - Indicates whether the Wisdom component is present.
+ * @property {string} size - Indicates whether the Wisdom component is present.
+ * @property {number} [quantity] - Indicates whether the Wisdom component is present.
+ */
+
 class ShoppingProductList extends LitElement {
 	static get properties() {
 		return {
@@ -11,19 +22,24 @@ class ShoppingProductList extends LitElement {
 	}
 
 	constructor() {
-		super();
-		this.products = [];
+    super();
+    /** @type {Product[]} */
+    this.products = [];
+    /** @type {Object} */
 		this.selectedsizes = {};
 	}
 
 	/** Tells the parent the price order has changed (asc/desc) */
 	_changeOrder() {
-		this.dispatchEvent(new CustomEvent('orderbychanged', { detail: (this.shadowRoot.querySelector('select').value === 'true') }));   
+		this.dispatchEvent(new CustomEvent('orderbychanged', { detail: (this.shadowRoot.querySelector('select').value === 'true') }));
 	}
 
-	/** Tells the parent a size is selected */
+	/**
+   * Tells the parent a size is selected
+   * @param {string} size
+   */
 	_selectSize(size) {
-		this.dispatchEvent(new CustomEvent('sizeselected', { detail: size }));   
+		this.dispatchEvent(new CustomEvent('sizeselected', { detail: size }));
 	}
 
 	render() {
@@ -31,8 +47,8 @@ class ShoppingProductList extends LitElement {
 			<div class="products-items">
 				<div class="products-optns">
 					${['s','m','l','xl'].map(size => html`
-						<button 
-							class="products-optns-size ${this.selectedsizes[size] ? 'products-optns-size-selected' : ''}" 
+						<button
+							class="products-optns-size ${this.selectedsizes[size] ? 'products-optns-size-selected' : ''}"
 							@click="${() => this._selectSize(size)}">
 								${size}
 						</button>
@@ -51,8 +67,8 @@ class ShoppingProductList extends LitElement {
 				</div>
 
 				<div class="products-items-grid">
-					${repeat(this.products, 
-						(product) => product.id, 
+					${repeat(this.products,
+						(product) => product.id,
 						(product) => html`
 							<shopping-product-list-item
 								.name=${product.name}

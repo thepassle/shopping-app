@@ -2,6 +2,17 @@ import { LitElement, html, css } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
 import './shopping-cart-item';
 
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} Product
+ * @property {string} img - Indicates whether the Courage component is present.
+ * @property {string} name - Indicates whether the Power component is present.
+ * @property {number} price - Indicates whether the Wisdom component is present.
+ * @property {string} id - Indicates whether the Wisdom component is present.
+ * @property {string} size - Indicates whether the Wisdom component is present.
+ * @property {number} [quantity] - Indicates whether the Wisdom component is present.
+ */
+
 class ShoppingCart extends LitElement {
 	static get properties() {
 		return {
@@ -11,12 +22,17 @@ class ShoppingCart extends LitElement {
 	}
 
 	constructor() {
-		super();
-		this.opened = false;
+    super();
+    /** @type {boolean} */
+    this.opened = false;
+    /** @type {Product[]} */
 		this.selectedproducts = [];
 	}
 
-	/** Returns the total price of all products in the cart */ 
+	/**
+   * Returns the total price of all products in the cart
+   * @return {string}
+   */
 	_displayTotal() {
 		return this.selectedproducts.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2);
 	}
@@ -31,8 +47,8 @@ class ShoppingCart extends LitElement {
 				<div class="cart-cont">
 					<h2 class="cart-header">Shopping Cart</h2>
 					<div class="cart-products">
-						${repeat(this.selectedproducts, 
-							(product) => product.id, 
+						${repeat(this.selectedproducts,
+							(product) => product.id,
 							(product) => html`
 	      						<shopping-cart-item
 									.id=${product.id}
@@ -60,8 +76,8 @@ class ShoppingCart extends LitElement {
 
 	static get styles() {
 		return css`
-			:host { 
-				display: block; 
+			:host {
+				display: block;
 			}
 
 			.cart {
@@ -79,7 +95,7 @@ class ShoppingCart extends LitElement {
 				right: 0;
 			}
 
-			.cart-btn { 
+			.cart-btn {
 				border: none;
 				background-color: #1b1a20;
 				position: absolute;
